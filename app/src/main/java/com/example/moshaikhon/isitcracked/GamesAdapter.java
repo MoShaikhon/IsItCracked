@@ -36,7 +36,7 @@ public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.MyViewHolder
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         holder.gameName.setText(games[position].getTitle());
-        String date = ImageAndColorUtils.trimCrackDate(games[position].getCrackDate());
+        String date = ImageAndColorUtils.setCrackStatus(games[position].getCrackDate());
         holder.crackedStatus.setText(date);
         ImageAndColorUtils.changeStatusAndIcon(holder.itemView.getContext(), holder.crackedIcon, holder.crackedStatus);
         loadImage(games[position].getImage(), holder.itemView.getContext(), holder.gameImage);

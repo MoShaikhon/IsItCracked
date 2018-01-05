@@ -24,12 +24,12 @@ public class ImageAndColorUtils {
         }
 
     }
-    public static String trimCrackDate(String crackDate){
-        if (!crackDate.equals("undefined")) {
-            crackDate=crackDate.substring(0,crackDate.indexOf("+")-1);
-            return crackDate;
+    public static String setCrackStatus(String crackStatus){
+        if (!crackStatus.equals("undefined")) {
+            crackStatus=crackStatus.substring(0,crackStatus.indexOf(":")-3);
+            return "Cracked since "+crackStatus;
         }
         else
-            return crackDate;
+            return "Not cracked yet";
 }
 }

@@ -1,5 +1,6 @@
 package com.example.moshaikhon.isitcracked;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -8,6 +9,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
+
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
@@ -18,7 +21,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements GamesAdapter.GameClickListener{
     RecyclerView recyclerView;
     public Games[] games;
     ProgressBar progressBar;
@@ -87,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     progressBar.setVisibility(View.GONE);
-                    recyclerView.setAdapter(new GamesAdapter(games));
+                    recyclerView.setAdapter(new GamesAdapter(games,MainActivity.this));
 
                 }
             });
@@ -103,5 +106,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onClick() {
+        Intent intent=new Intent(this,DetailedGameActivity.class);
+        startActivity(intent);
+
+    }
+
 }
 
+//TODO: 06-Jan-18  design & implement detailed activity
+// TODO: 06-Jan-18  polish toolbar and navigation, and search functionality

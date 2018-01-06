@@ -15,11 +15,11 @@ public class ImageAndColorUtils {
     public static void changeStatusAndIcon(Context context,ImageView imageView, TextView statusView) {
         if (statusView.getText().equals("undefined")) {
             imageView.setImageResource(R.drawable.ic_slider_cross);
-            statusView.setTextColor(ContextCompat.getColor(context, R.color.redText));
+            statusView.setTextColor(ContextCompat.getColor(context, R.color.secondaryColorAccent));
 
         } else {
             imageView.setImageResource(R.drawable.ic_slider_check);
-            statusView.setTextColor(ContextCompat.getColor(context, R.color.greenText));
+            statusView.setTextColor(ContextCompat.getColor(context, R.color.primaryColorAccent));
 
         }
 

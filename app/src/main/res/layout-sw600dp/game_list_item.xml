@@ -15,7 +15,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:elevation="12dp"
-        app:cardBackgroundColor="@color/blackCard"
+        app:cardBackgroundColor="@color/primaryColor"
         app:cardCornerRadius="16dp"
         app:cardPreventCornerOverlap="false">
 
@@ -67,7 +67,7 @@
                 android:layout_marginLeft="0dp"
                 android:layout_marginTop="0dp"
                 android:text="TextView"
-                android:textColor="@color/redText"
+                android:textColor="@color/secondaryColorAccent"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="@+id/guideline2"

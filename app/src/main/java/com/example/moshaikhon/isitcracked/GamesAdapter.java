@@ -5,8 +5,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
@@ -21,8 +23,16 @@ public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.MyViewHolder
 
     private Games[] games;
 
-    public GamesAdapter(Games[] games) {
+    final private GameClickListener mOnClickListener;
+
+    public interface GameClickListener {
+        void onClick();
+    }
+
+    public GamesAdapter(Games[] games, GameClickListener onClickListener) {
+
         this.games = games;
+        mOnClickListener = onClickListener;
     }
 
     @Override
@@ -54,7 +64,8 @@ public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.MyViewHolder
     }
 
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+
         TextView gameName;
         TextView crackedStatus;
         RoundedImageView gameImage;
@@ -62,11 +73,22 @@ public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.MyViewHolder
 
         public MyViewHolder(View view) {
             super(view);
-            gameName = (TextView) view.findViewById(R.id.gameNameTextView);
-            crackedStatus = (TextView) view.findViewById(R.id.crackStatusTextView);
-            gameImage = (RoundedImageView) view.findViewById(R.id.gameCoverImageView);
-            crackedIcon = (ImageView) view.findViewById(R.id.statusIconImageView);
+            gameName = view.findViewById(R.id.gameNameTextView);
+            crackedStatus = view.findViewById(R.id.crackStatusTextView);
+            gameImage = view.findViewById(R.id.gameCoverImageView);
+            crackedIcon = view.findViewById(R.id.statusIconImageView);
+            view.setOnClickListener(this);
 
         }
+
+        @Override
+        public void onClick(View v) {
+            int adapterPosition = getAdapterPosition();
+            Toast.makeText(v.getContext(),games[adapterPosition].getTitle(),Toast.LENGTH_LONG).show();
+
+            mOnClickListener.onClick();
+
+        }
+
     }
 }

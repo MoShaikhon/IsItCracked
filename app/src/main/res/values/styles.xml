@@ -3,9 +3,23 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/primaryColorLight</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">#131313</item>
+        <item name="colorPrimaryDark">#000</item>
+        <item name="colorAccent">@color/primaryColorAccent</item>
+    </style>
+
+    <style name="ToolbarTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="colorControlNormal">@android:color/background_light</item>
+    </style>
+
+    <style name="DetailedActivityToolBarStyle" parent="ToolbarTheme">
+        <item name="android:background">@android:drawable/screen_background_dark_transparent</item>
+
+    </style>
+
+    <style name="MainActivityToolBarStyle" parent="ToolbarTheme">
+        <item name="android:textColor">@android:color/white</item>
     </style>
 
     <style name="TextStyle">
@@ -13,6 +27,17 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="layout_constraintHorizontal_bias">0.0</item>
+    </style>
+
+    <style name="InfoTextStyle" parent="TextStyle">
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:fontFamily">@font/neusa_medium</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="InfoImageStyle">
+        <item name="android:layout_width">18dp</item>
+        <item name="android:layout_height">17dp</item>
 
     </style>
 

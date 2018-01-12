@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">IsItCracked</string>
+    <string name="releaseDate">releaseDate</string>
+    <string name="isHot">isHot</string>
+    <string name="isAAA">isAAA</string>
+    <string name="crackDate">crackDate</string>
+    <string name="originalPrice">originalPrice</string>
+    <string name="drm">DRM</string>
+    <string name="crackCount">crackCount</string>
+    <string name="rating">rating</string>
+    <string name="gameImage">gameImage</string>
+    <string name="sceneGroup">sceneGroup</string>
+    <string name="alterativePrice">alterativePrice</string>
+    <string name="origin">origin</string>
+
 </resources>

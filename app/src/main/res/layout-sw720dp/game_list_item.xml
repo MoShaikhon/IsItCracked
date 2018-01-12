@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="8dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="8dp">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/gameCardView"
+        android:layout_width="@dimen/game_card_item_width"
+        android:layout_height="@dimen/game_card_item_height"
+        android:elevation="12dp"
+        app:cardBackgroundColor="@color/primaryColor"
+        app:cardCornerRadius="16dp"
+        app:cardPreventCornerOverlap="false">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            >
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/gameCoverImageView"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/g2"
+                app:layout_constraintBottom_toTopOf="@+id/guideline"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintLeft_toLeftOf="parent"
+
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0"
+                app:riv_corner_radius_top_left="16dp"
+                app:riv_corner_radius_top_right="16dp" />
+
+
+            <TextView
+                android:id="@+id/gameNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="4dp"
+                android:fontFamily="sans-serif"
+                android:text="game name"
+                android:textAllCaps="true"
+                android:textColor="@android:color/background_light"
+                android:textSize="16sp"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/guideline" />
+
+            <TextView
+                android:id="@+id/crackStatusTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginTop="0dp"
+                android:text="TextView"
+                android:textColor="@color/secondaryColorAccent"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="@+id/guideline2"
+                app:layout_constraintTop_toBottomOf="@+id/gameNameTextView"
+                app:layout_constraintVertical_bias="0.555" />
+
+            <android.support.constraint.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.76" />
+
+            <ImageView
+                android:id="@+id/statusIconImageView"
+                android:layout_width="15dp"
+                android:layout_height="12dp"
+                android:layout_marginBottom="0dp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:layout_marginTop="0dp"
+                android:src="@drawable/ic_slider_cross"
+                app:layout_constraintBottom_toBottomOf="@+id/crackStatusTextView"
+                app:layout_constraintLeft_toLeftOf="@+id/gameNameTextView"
+                app:layout_constraintRight_toLeftOf="@+id/guideline2"
+                app:layout_constraintTop_toTopOf="@+id/crackStatusTextView" />
+
+            <android.support.constraint.Guideline
+                android:id="@+id/guideline2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.09" />
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>

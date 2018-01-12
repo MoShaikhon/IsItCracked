@@ -1,19 +1,17 @@
 package com.example.moshaikhon.isitcracked;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewManager;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
-
-import java.util.zip.Inflater;
 
 /**
  * Created by MoShaikhon on 01-Jan-18.
@@ -46,9 +44,9 @@ public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.MyViewHolder
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         holder.gameName.setText(games[position].getTitle());
-        String date = ImageAndColorUtils.setCrackStatus(games[position].getCrackDate());
+        String date = "Cracked since " + GameUtils.setCrackStatus(games[position].getCrackDate());
         holder.crackedStatus.setText(date);
-        ImageAndColorUtils.changeStatusAndIcon(holder.itemView.getContext(), holder.crackedIcon, holder.crackedStatus);
+        GameUtils.changeStatusAndIcon(holder.itemView.getContext(), holder.crackedIcon, holder.crackedStatus);
         loadImage(games[position].getImage(), holder.itemView.getContext(), holder.gameImage);
 
     }
@@ -64,7 +62,7 @@ public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.MyViewHolder
     }
 
 
-    class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView gameName;
         TextView crackedStatus;
@@ -84,9 +82,33 @@ public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.MyViewHolder
         @Override
         public void onClick(View v) {
             int adapterPosition = getAdapterPosition();
-            Toast.makeText(v.getContext(),games[adapterPosition].getTitle(),Toast.LENGTH_LONG).show();
-
+            sendToDetailActivity(games[adapterPosition], v.getContext());
             mOnClickListener.onClick();
+
+        }
+
+        public void sendToDetailActivity(Games game, Context context) {
+
+            String releaseDate = game.getReleaseDate();
+            String crackdate = game.getCrackDate();
+            Intent intent = new Intent(context, DetailedGameActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString(context.getString(R.string.isAAA), game.getIsAAA());
+            bundle.putString(context.getString(R.string.isHot), game.getIsHot());
+            bundle.putString(context.getString(R.string.releaseDate), releaseDate);
+            bundle.putString(context.getString(R.string.crackDate), crackdate);
+            bundle.putString(context.getString(R.string.originalPrice), game.getOriginalPrice());
+            bundle.putString(context.getString(R.string.drm), game.getDrm1());
+            bundle.putString(context.getString(R.string.gameImage), game.getImage());
+            bundle.putString(context.getString(R.string.crackCount), game.getNfosCount());
+            bundle.putString(context.getString(R.string.rating), game.getRatings());
+            bundle.putString(context.getString(R.string.sceneGroup), game.getSceneGroup1());
+            bundle.putString(context.getString(R.string.alterativePrice), game.getAlternativePrice());
+            bundle.putString(context.getString(R.string.origin), game.getOrigin());
+
+            intent.putExtras(bundle);
+            context.startActivity(intent);
+
 
         }
 

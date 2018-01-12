@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+
     <dimen name="game_card_item_width">380dp</dimen>
     <dimen name="game_card_item_height">260dp</dimen>
 </resources>

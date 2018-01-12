@@ -5,12 +5,14 @@
     android:id="@+id/main_activity_container_land"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/primaryLightColor"
     tools:context="com.example.moshaikhon.isitcracked.MainActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
+        android:layout_marginBottom="8dp"
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
         android:theme="@style/MainActivityToolBarStyle"

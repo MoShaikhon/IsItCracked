@@ -82,8 +82,9 @@ public class DetailedGameActivity extends AppCompatActivity {
         drmTextView.setText(GameUtils.getDRMProtection(bundle.getString(getString(R.string.drm))));
 
         Picasso.with(this)
-                .load(bundle.getString(getString(R.string.imageCover)))
+                .load(bundle.getString(getString(R.string.gameImage)))
                 .into(imageCover);
+
 
     }
 

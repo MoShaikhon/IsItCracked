@@ -48,9 +48,9 @@ public class GameUtils {
             return "Unknown";
     }
 
-    public static void getPlatformIcon( ImageView imageView, String platform,String isOrigin) {
+    public static void getPlatformIcon(ImageView imageView, String platform, String isOrigin) {
 
-        platform=fixPlatform(platform,isOrigin);
+        platform = fixPlatform(platform, isOrigin);
 
         switch (platform) {
             case "steam":
@@ -108,8 +108,8 @@ public class GameUtils {
     }
 
     public static String fixRating(String rating) {
-        if (Integer.parseInt(rating) < 1)
-            return "Unknown";
+        if (rating.equals("undefined") || Integer.parseInt(rating) < 1)
+            return "Undefined";
         return rating;
     }
 
@@ -121,13 +121,20 @@ public class GameUtils {
     }
 
     public static String fixPrice(String originalPrice, String altPrice) {
-        if (Double.parseDouble(originalPrice) < 1 && Double.parseDouble(altPrice) >= 1)
-            return altPrice;
-        else if (Double.parseDouble(originalPrice) >= 1)
-            return originalPrice;
-        else
-            return "Unknown";
 
+        if (!originalPrice.equals("undefined")) {
+
+            if (Double.parseDouble(originalPrice) < 1
+                    && !altPrice.equals("undefined")
+                    && Double.parseDouble(altPrice) >= 1)
+                return altPrice;
+
+            else if (Double.parseDouble(originalPrice) >= 1)
+                return originalPrice;
+            else
+                return "Undefined";
+        }
+        return "Undefined";
 
     }
 }

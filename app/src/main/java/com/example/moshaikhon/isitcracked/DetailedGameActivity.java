@@ -75,7 +75,6 @@ public class DetailedGameActivity extends AppCompatActivity {
         ratingTextView.setText(GameUtils.getRatingString(bundle.getString(getString(R.string.rating))));
         priceTextView.setText(GameUtils.getPriceString(bundle.getString(getString(R.string.originalPrice))
                 ,bundle.getString(getString(R.string.alterativePrice))));
-        drmTextView.setText(bundle.getString(getString(R.string.drm)));
         releaseDateTextView.setText(GameUtils.getReleaseDate(bundle.getString(getString(R.string.releaseDate))));
         crackDateTextView.setText(GameUtils.getCrackDate(bundle.getString(getString(R.string.crackDate))));
         isAAATextView.setText(GameUtils.GetAAA(bundle.getString(getString(R.string.isAAA))));
@@ -83,7 +82,7 @@ public class DetailedGameActivity extends AppCompatActivity {
         drmTextView.setText(GameUtils.getDRMProtection(bundle.getString(getString(R.string.drm))));
 
         Picasso.with(this)
-                .load(bundle.getString(getString(R.string.gameImage)))
+                .load(bundle.getString(getString(R.string.imageCover)))
                 .into(imageCover);
 
     }

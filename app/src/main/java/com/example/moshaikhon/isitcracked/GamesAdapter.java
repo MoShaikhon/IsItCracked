@@ -94,7 +94,7 @@ public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.MyViewHolder
             Intent intent = new Intent(context, DetailedGameActivity.class);
             Bundle bundle = new Bundle();
             bundle.putString(context.getString(R.string.isAAA), game.getIsAAA());
-            bundle.putString(context.getString(R.string.isHot), game.getIsHot());
+            bundle.putString(context.getString(R.string.imageCover), game.getImageCover());
             bundle.putString(context.getString(R.string.releaseDate), releaseDate);
             bundle.putString(context.getString(R.string.crackDate), crackdate);
             bundle.putString(context.getString(R.string.originalPrice), game.getOriginalPrice());

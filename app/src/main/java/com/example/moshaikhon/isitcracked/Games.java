@@ -25,8 +25,8 @@ public class Games {
     @JsonProperty("isAAA")
     private String isAAA;
 
-    @JsonProperty("isHot")
-    private String isHot;
+    @JsonProperty("imageCover")
+    private String imageCover;
 
     @JsonProperty("NFOsCount")
     private String nfosCount;
@@ -70,14 +70,14 @@ public class Games {
         this.isAAA = isAAA;
     }
 
-    @JsonProperty("isHot")
-    public String getIsHot() {
-        return isHot;
+    @JsonProperty("imageCover")
+    public String getImageCover() {
+        return imageCover;
     }
 
-    @JsonProperty("isHot")
-    public void setIsHot(String isHot) {
-        this.isHot = isHot;
+    @JsonProperty("imageCover")
+    public void setImageCover(String imageCover) {
+        this.imageCover = imageCover;
     }
 
     @JsonProperty("NFOsCount")

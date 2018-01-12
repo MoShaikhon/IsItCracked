@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">IsItCracked</string>
     <string name="releaseDate">releaseDate</string>
-    <string name="isHot">isHot</string>
+    <string name="imageCover">imageCover</string>
     <string name="isAAA">isAAA</string>
     <string name="crackDate">crackDate</string>
     <string name="originalPrice">originalPrice</string>

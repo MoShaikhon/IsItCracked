@@ -45,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements GamesAdapter.Game
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         recyclerView = findViewById(R.id.games_recycler_view);
+
+        //if in landscape mode, view 2 items in the same row
         if(findViewById(R.id.main_activity_container_land)!=null)
             recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         else if(findViewById(R.id.main_activity_container)!=null)

@@ -12,5 +12,7 @@
     <string name="sceneGroup">sceneGroup</string>
     <string name="alterativePrice">alterativePrice</string>
     <string name="origin">origin</string>
+    <string name="connectionErrorString">Connection error</string>
+    <string name="tapToRetryString">Tap to retry</string>
 
 </resources>

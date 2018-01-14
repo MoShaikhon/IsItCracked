@@ -6,6 +6,7 @@
         <item name="colorPrimary">#131313</item>
         <item name="colorPrimaryDark">#000</item>
         <item name="colorAccent">@color/primaryColorAccent</item>
+
     </style>
 
     <style name="ToolbarTheme" parent="Theme.AppCompat.NoActionBar">
@@ -39,6 +40,18 @@
         <item name="android:layout_width">18dp</item>
         <item name="android:layout_height">17dp</item>
 
+    </style>
+    <style name="connectionErrorTextStyle" parent="TextStyle">
+        <item name="android:textColor">@color/primaryTextColor</item>
+
+        <item name="android:fontFamily">@font/neusa_semibold</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="tryAgainTextStyle" parent="TextStyle">
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:fontFamily">@font/neusa_medium</item>
+        <item name="android:textSize">15sp</item>
     </style>
 
 </resources>

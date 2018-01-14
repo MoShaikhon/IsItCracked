@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:onClick="clickToRetry"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/errorAnimationView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/cantConnectTextView"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+
+        app:lottie_fileName="empty_list.json"
+        app:lottie_loop="true"
+        app:lottie_autoPlay="true"
+
+        />
+
+    <TextView
+        android:id="@+id/cantConnectTextView"
+        style="@style/connectionErrorTextStyle"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="@string/connectionErrorString"
+
+        />
+
+    <TextView
+        android:id="@+id/tryAgainToConnectTextView"
+        style="@style/tryAgainTextStyle"
+        android:layout_below="@id/cantConnectTextView"
+        android:layout_centerHorizontal="true"
+        android:text="@string/tapToRetryString"
+        android:layout_centerVertical="true"
+         />
+</RelativeLayout>
+

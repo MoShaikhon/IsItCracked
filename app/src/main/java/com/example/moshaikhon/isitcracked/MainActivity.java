@@ -2,6 +2,8 @@ package com.example.moshaikhon.isitcracked;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -12,10 +14,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ProgressBar;
 import android.support.v7.widget.SearchView;
-import android.widget.Toast;
+import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -34,40 +36,38 @@ public class MainActivity extends AppCompatActivity implements GamesAdapter.Game
     RecyclerView recyclerView;
     public Games[] games;
     public List<Games> gamesFiltered;
-
+    TextView connectionErrTextView;
+    TextView tryAgainErrTextView;
     GamesAdapter gamesAdapter;
-    ProgressBar progressBar;
+    LottieAnimationView progressAnimationView;
     final String BASE_URL = "https://crackwatch.com/api/games";
-
+    boolean isConnected;
+    NetworkInfo activeNetwork;
+    ConnectivityManager cm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         recyclerView = findViewById(R.id.games_recycler_view);
-
-        //if in landscape mode, view 2 items in the same row
-        if(findViewById(R.id.main_activity_container_land)!=null)
-            recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-        else if(findViewById(R.id.main_activity_container)!=null)
-        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
-
-        progressBar = findViewById(R.id.progressBar);
-        progressBar.setVisibility(View.VISIBLE);
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
-        Log.d("searchResult", "starbo".substring(0, "starbo".length() - 1));
-        Log.d("searchResult", "starbo".substring(0, 2));
+        progressAnimationView = findViewById(R.id.progressAnimationView);
+        tryAgainErrTextView = findViewById(R.id.tryAgainToConnectTextView);
+        connectionErrTextView = findViewById(R.id.cantConnectTextView);
 
+        //if in landscape mode, view 2 items in the same row
+        if (findViewById(R.id.main_activity_container_land) != null)
+            recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        else if (findViewById(R.id.main_activity_container) != null)
+            recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
+        cm = (ConnectivityManager) this.getSystemService(CONNECTIVITY_SERVICE);
 
-        try {
-            run(BASE_URL);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        handleConnectivityStateChanges();
 
 
     }
+
 
     void run(String url) throws IOException {
         OkHttpClient client = new OkHttpClient();
@@ -79,13 +79,18 @@ public class MainActivity extends AppCompatActivity implements GamesAdapter.Game
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.i("server response", "a7a");
 
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        hideProgressAnimationView();
+                        showConnectionErrorViews();
+                    }
+                });
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                //    Log.i("server response", response.body().string());
                 handleJsonResponse(response.body().string());
 
             }
@@ -110,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements GamesAdapter.Game
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    progressBar.setVisibility(View.GONE);
+                    hideProgressAnimationView();
                     gamesAdapter = new GamesAdapter(games, MainActivity.this);
                     recyclerView.setAdapter(gamesAdapter);
 
@@ -124,9 +129,7 @@ public class MainActivity extends AppCompatActivity implements GamesAdapter.Game
             e.printStackTrace();
         }
 
-
     }
-
 
     @Override
     public void onClick() {
@@ -150,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements GamesAdapter.Game
             public boolean onQueryTextSubmit(String query) {
                 gamesFiltered = new ArrayList<>();
                 int index = 0;
-                if (progressBar.getVisibility() == View.GONE) {
+                if (progressAnimationView.getVisibility() == View.GONE) {
 
                     for (Games game : games) {
                         if (game.getTitle().length() >= query.length())
@@ -201,6 +204,54 @@ public class MainActivity extends AppCompatActivity implements GamesAdapter.Game
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return super.onOptionsItemSelected(item);
+    }
+
+    public void showConnectionErrorViews() {
+        findViewById(R.id.connectionStatusContainer).setVisibility(View.VISIBLE);
+    }
+
+    public void hideConnectionErrorViews() {
+        findViewById(R.id.connectionStatusContainer).setVisibility(View.GONE);
+
+    }
+
+    public void showProgressAnimationView() {
+        progressAnimationView.setVisibility(View.VISIBLE);
+
+    }
+
+    public void hideProgressAnimationView() {
+        progressAnimationView.setVisibility(View.GONE);
+
+    }
+
+    public void handleConnectivityStateChanges() {
+
+        activeNetwork = cm.getActiveNetworkInfo();
+        isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+
+        if (isConnected) {
+            hideConnectionErrorViews();
+            showProgressAnimationView();
+            try {
+                run(BASE_URL);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        } else {
+            hideProgressAnimationView();
+            showConnectionErrorViews();
+        }
+    }
+
+    public void clickToRetry(View v) {
+
+
+        handleConnectivityStateChanges();
+
+
     }
 
 }

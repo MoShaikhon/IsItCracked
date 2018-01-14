@@ -6,12 +6,13 @@
     android:background="@color/primaryLightColor">
 
     <com.makeramen.roundedimageview.RoundedImageView
-        android:id="@+id/gameCoverImageView"
+        android:id="@+id/detailedGameCoverImageView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:adjustViewBounds="true"
         android:scaleType="fitXY"
         android:src="@drawable/g2"
+        android:transitionName="imgTrans"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="parent"

@@ -15,16 +15,26 @@ public class GameUtils {
 
     public static void changeStatusAndIcon(Context context, ImageView imageView, TextView statusView) {
         if (statusView.getText().equals("undefined")) {
-            imageView.setImageResource(R.drawable.ic_slider_cross);
+            changeCrackIcon(false,imageView);
             statusView.setTextColor(ContextCompat.getColor(context, R.color.secondaryColorAccent));
 
         } else {
-            imageView.setImageResource(R.drawable.ic_slider_check);
             statusView.setTextColor(ContextCompat.getColor(context, R.color.primaryColorAccent));
+            changeCrackIcon(true,imageView);
 
         }
 
     }
+
+    public static void changeCrackIcon(boolean cracked,ImageView imageView) {
+        if (!cracked)
+            imageView.setImageResource(R.drawable.ic_slider_cross);
+        else
+            imageView.setImageResource(R.drawable.ic_slider_check);
+
+
+    }
+
 
     public static String setCrackStatus(String crackStatus) {
         if (!crackStatus.equals("undefined")) {
@@ -54,7 +64,7 @@ public class GameUtils {
 
         switch (platform) {
             case "steam":
-                imageView.setImageResource(R.drawable.ic_steam_icon_logo);
+                imageView.setImageResource(R.drawable.ic_steam_vector);
                 break;
             case "origin":
                 imageView.setImageResource(R.drawable.ic_origins);
@@ -117,7 +127,7 @@ public class GameUtils {
         if (originPlatform.equals("undefined"))
             return platform;
         else
-            return "Origin";
+            return "origin";
     }
 
     public static String fixPrice(String originalPrice, String altPrice) {

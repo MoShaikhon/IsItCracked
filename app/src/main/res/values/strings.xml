@@ -14,5 +14,6 @@
     <string name="origin">origin</string>
     <string name="connectionErrorString">Connection error</string>
     <string name="tapToRetryString">Tap to retry</string>
+    <string name="platform">platform</string>
 
 </resources>

@@ -1,4 +1,4 @@
-package com.example.moshaikhon.isitcracked;
+package com.example.moshaikhon.isitcracked.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,8 +10,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.moshaikhon.isitcracked.DetailedGameActivity;
+import com.example.moshaikhon.isitcracked.GameUtils;
+import com.example.moshaikhon.isitcracked.R;
+import com.example.moshaikhon.isitcracked.model.Games;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by MoShaikhon on 01-Jan-18.
@@ -20,6 +28,8 @@ import com.squareup.picasso.Picasso;
 public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.MyViewHolder> {
 
     private Games[] games;
+    private List<Games> gamesList;
+    private List<Games> originalGameList;
 
     final private GameClickListener mOnClickListener;
 
@@ -29,8 +39,25 @@ public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.MyViewHolder
 
     public GamesAdapter(Games[] games, GameClickListener onClickListener) {
 
-        this.games = games;
+        gamesList = new ArrayList<>(Arrays.asList(games));
+        originalGameList=new ArrayList<>(Arrays.asList(games));
         mOnClickListener = onClickListener;
+    }
+
+    public void filter(String text) {
+        gamesList.clear();
+        if (text.isEmpty()) {
+            gamesList.addAll(originalGameList);
+        } else {
+            text = text.toLowerCase();
+            for (Games game : originalGameList) {
+                if (game.getTitle().toLowerCase().contains(text)) {
+                    gamesList.add(game);
+                }
+            }
+        }
+
+        notifyDataSetChanged();
     }
 
     @Override
@@ -43,11 +70,11 @@ public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.MyViewHolder
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        holder.gameName.setText(games[position].getTitle());
-        String date = "Cracked since " + GameUtils.setCrackStatus(games[position].getCrackDate());
+        holder.gameName.setText(gamesList.get(position).getTitle());
+        String date = "Cracked since " + GameUtils.setCrackStatus(gamesList.get(position).getCrackDate());
         holder.crackedStatus.setText(date);
         GameUtils.changeStatusAndIcon(holder.itemView.getContext(), holder.crackedIcon, holder.crackedStatus);
-        loadImage(games[position].getImage(), holder.itemView.getContext(), holder.gameImage);
+        loadImage(gamesList.get(position).getImage(), holder.itemView.getContext(), holder.gameImage);
 
     }
 
@@ -58,7 +85,7 @@ public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.MyViewHolder
 
     @Override
     public int getItemCount() {
-        return games.length;
+        return gamesList.size();
     }
 
 
@@ -82,7 +109,7 @@ public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.MyViewHolder
         @Override
         public void onClick(View v) {
             int adapterPosition = getAdapterPosition();
-            sendToDetailActivity(games[adapterPosition], v.getContext());
+            sendToDetailActivity(gamesList.get(adapterPosition), v.getContext());
             mOnClickListener.onClick();
 
         }
@@ -105,6 +132,8 @@ public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.MyViewHolder
             bundle.putString(context.getString(R.string.sceneGroup), game.getSceneGroup1());
             bundle.putString(context.getString(R.string.alterativePrice), game.getAlternativePrice());
             bundle.putString(context.getString(R.string.origin), game.getOrigin());
+            bundle.putString(context.getString(R.string.platform), game.getPlatform());
+
 
             intent.putExtras(bundle);
             context.startActivity(intent);

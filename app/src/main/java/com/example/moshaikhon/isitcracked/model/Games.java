@@ -1,4 +1,4 @@
-package com.example.moshaikhon.isitcracked;
+package com.example.moshaikhon.isitcracked.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -45,8 +45,13 @@ public class Games {
 
     @JsonProperty("BestPrice1")
     private String alternativePrice;
+
     @JsonProperty("Origin")
     private String origin;
+
+
+    @JsonProperty("OriginalPlatform")
+    private String platform;
 
 
     @JsonProperty("releaseDate")
@@ -178,5 +183,15 @@ public class Games {
     @JsonProperty("Origin")
     public void setOrigin(String origin) {
         this.origin = origin;
+    }
+
+    @JsonProperty("OriginalPlatform")
+    public String getPlatform() {
+        return platform;
+    }
+
+    @JsonProperty("OriginalPlatform")
+    public void setPlatform(String platform) {
+        this.platform = platform;
     }
 }

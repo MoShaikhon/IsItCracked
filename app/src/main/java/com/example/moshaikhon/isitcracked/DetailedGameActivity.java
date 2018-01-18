@@ -1,11 +1,17 @@
 package com.example.moshaikhon.isitcracked;
 
 import android.content.Intent;
+import android.os.Build;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.transition.Transition;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.moshaikhon.isitcracked.GameUtils;
+import com.example.moshaikhon.isitcracked.R;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
@@ -14,6 +20,12 @@ import butterknife.ButterKnife;
 
 
 public class DetailedGameActivity extends AppCompatActivity {
+    // Extra name for the ID parameter
+    public static final String EXTRA_PARAM_ID = "detail:_id";
+
+    // View name of the header image. Used for activity scene transitions
+    public static final String VIEW_NAME_HEADER_IMAGE = "detail:header:image";
+
 
     @BindView(R.id.activity_detailed_toolBar)
     Toolbar mToolbar;
@@ -21,8 +33,8 @@ public class DetailedGameActivity extends AppCompatActivity {
     @BindView(R.id.crackDateTextView)
     TextView crackDateTextView;
 
-    @BindView(R.id.gameCoverImageView)
-    RoundedImageView imageCover;
+    @BindView(R.id.detailedGameCoverImageView)
+    RoundedImageView detailedGameCoverImageView;
 
     @BindView(R.id.priceTextView)
     TextView priceTextView;
@@ -45,6 +57,12 @@ public class DetailedGameActivity extends AppCompatActivity {
     @BindView(R.id.releaseDateTextView)
     TextView releaseDateTextView;
 
+    @BindView(R.id.platformIconImageView)
+    ImageView platformIconImageView;
+
+    @BindView(R.id.crackStatusImageView)
+    ImageView crackStatusImageView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +74,7 @@ public class DetailedGameActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+       // ViewCompat.setTransitionName(detailedGameCoverImageView,"imgTrans");
 
         Intent intent = getIntent();
         if (intent.getExtras() != null) {
@@ -80,12 +99,99 @@ public class DetailedGameActivity extends AppCompatActivity {
         isAAATextView.setText(GameUtils.GetAAA(bundle.getString(getString(R.string.isAAA))));
         sceneGroupTextView.setText(GameUtils.getSceneGroup(bundle.getString(getString(R.string.sceneGroup))));
         drmTextView.setText(GameUtils.getDRMProtection(bundle.getString(getString(R.string.drm))));
+        GameUtils.getPlatformIcon(platformIconImageView
+                ,bundle.getString(getString(R.string.platform))
+                ,bundle.getString(getString(R.string.origin)));
+        setCrackStatusIcon(bundle.getString(getString(R.string.crackDate)));
+
+       loadImage(bundle);
+
+
+
+    }
+
+    private void setCrackStatusIcon(String crackDate){
+
+        boolean isCracked=!crackDate.equalsIgnoreCase("undefined");
+        GameUtils.changeCrackIcon(isCracked,crackStatusImageView);
+    }
+
+    private void loadImage(Bundle game) {
+        // Set the title TextView to the item's name and author
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP &&
+                addTransitionListener(game.getString(getString(R.string.imageCover)))) {
+            // If we're running on Lollipop and we have added a listener to the shared element
+            // transition, load the thumbnail. The listener will load the full-size image when
+            // the transition is complete.
+            loadThumbnail(game.getString(getString(R.string.gameImage)));
+        } else {
+            // If all other cases we should just load the full-size image now
+            loadFullSizeImage(game.getString(getString(R.string.imageCover)));
+        }
+    }
+    private void loadThumbnail(String imgURL) {
 
         Picasso.with(this)
-                .load(bundle.getString(getString(R.string.gameImage)))
-                .into(imageCover);
+                .load(imgURL)
+                .noFade()
+                .into(detailedGameCoverImageView);
 
+    }
 
+    /**
+     * Load the item's full-size image into our ImageView
+     */
+    private void loadFullSizeImage(String imgURL) {
+
+        Picasso.with(this)
+                .load(imgURL)
+                .noFade()
+                .noPlaceholder()
+                .into(detailedGameCoverImageView);
+    }
+
+    private boolean addTransitionListener(final String imgURL) {
+        final Transition transition = getWindow().getSharedElementEnterTransition();
+
+        if (transition != null) {
+            // There is an entering shared element transition so add a listener to it
+            transition.addListener(new Transition.TransitionListener() {
+                @Override
+                public void onTransitionEnd(Transition transition) {
+                    // As the transition has ended, we can now load the full-size image
+                    loadFullSizeImage(imgURL);
+
+                    // Make sure we remove ourselves as a listener
+                    transition.removeListener(this);
+                }
+
+                @Override
+                public void onTransitionStart(Transition transition) {
+                    // No-op
+                }
+
+                @Override
+                public void onTransitionCancel(Transition transition) {
+                    // Make sure we remove ourselves as a listener
+                    transition.removeListener(this);
+                }
+
+                @Override
+                public void onTransitionPause(Transition transition) {
+                    // No-op
+                }
+
+                @Override
+                public void onTransitionResume(Transition transition) {
+                    // No-op
+                }
+            });
+            return true;
+        }
+
+        // If we reach here then we have not added a listener
+        return false;
     }
 
 }

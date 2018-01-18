@@ -15,16 +15,18 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.support.v7.widget.SearchView;
-import android.widget.TextView;
+import android.view.ViewGroup;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.example.moshaikhon.isitcracked.adapter.GamesAdapter;
+import com.example.moshaikhon.isitcracked.model.Games;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -36,14 +38,18 @@ public class MainActivity extends AppCompatActivity implements GamesAdapter.Game
     RecyclerView recyclerView;
     public Games[] games;
     public List<Games> gamesFiltered;
-    TextView connectionErrTextView;
-    TextView tryAgainErrTextView;
+
     GamesAdapter gamesAdapter;
     LottieAnimationView progressAnimationView;
     final String BASE_URL = "https://crackwatch.com/api/games";
     boolean isConnected;
     NetworkInfo activeNetwork;
     ConnectivityManager cm;
+    @BindView(R.id.main_activity_container_land)
+    ViewGroup landScapeLayout;
+    @BindView(R.id.main_activity_container)
+    ViewGroup portraitLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +59,6 @@ public class MainActivity extends AppCompatActivity implements GamesAdapter.Game
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
         progressAnimationView = findViewById(R.id.progressAnimationView);
-        tryAgainErrTextView = findViewById(R.id.tryAgainToConnectTextView);
-        connectionErrTextView = findViewById(R.id.cantConnectTextView);
 
         //if in landscape mode, view 2 items in the same row
         if (findViewById(R.id.main_activity_container_land) != null)
@@ -140,6 +144,7 @@ public class MainActivity extends AppCompatActivity implements GamesAdapter.Game
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
+        setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
         // Associate searchable configuration with the SearchView
         SearchManager searchManager =
                 (SearchManager) getSystemService(Context.SEARCH_SERVICE);
@@ -151,49 +156,15 @@ public class MainActivity extends AppCompatActivity implements GamesAdapter.Game
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                gamesFiltered = new ArrayList<>();
-                int index = 0;
-                if (progressAnimationView.getVisibility() == View.GONE) {
-
-                    for (Games game : games) {
-                        if (game.getTitle().length() >= query.length())
-                            if (game.getTitle().substring(0, query.length()).equalsIgnoreCase(query) && query.length() >= 1) {
-                                ++index;
-                                //  Log.d("searchResult", game.getTitle());
-                                gamesFiltered.add(game);
-
-                                //   Toast.makeText(MainActivity.this, game.getTitle(), Toast.LENGTH_LONG).show();
-                            }
-                    }
-
-                }
-                for (Games game : gamesFiltered) {
-                    Log.d("searchResult", game.getTitle());
-
-                }
-                searchView.clearFocus();
-                gamesAdapter = new GamesAdapter(gamesFiltered.toArray(new Games[gamesFiltered.size()])
-                        , MainActivity.this);
-                gamesAdapter.notifyDataSetChanged();
-                recyclerView.setAdapter(gamesAdapter);
-
+                if(query!=null&&gamesAdapter!=null)
+                gamesAdapter.filter(query);
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                //  Toast.makeText(MainActivity.this,newText,Toast.LENGTH_LONG).show();
-             /*   if(progressBar.getVisibility()==View.GONE){
-
-                    for (Games game:games) {
-                        if(game.getTitle().substring(0,newText.length()-1).contains(newText)&&newText.length()>=1)
-
-                        Toast.makeText(MainActivity.this,game.getTitle(),Toast.LENGTH_LONG).show();
-
-
-                    }
-
-                }*/
+                if(newText!=null&&gamesAdapter!=null)
+                    gamesAdapter.filter(newText);
                 return true;
             }
         });

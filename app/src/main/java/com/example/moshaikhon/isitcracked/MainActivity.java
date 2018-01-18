@@ -24,7 +24,6 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
-import java.util.List;
 
 import butterknife.BindView;
 import okhttp3.Call;
@@ -33,11 +32,12 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import static android.support.v7.widget.RecyclerView.*;
+
 
 public class MainActivity extends AppCompatActivity implements GamesAdapter.GameClickListener {
     RecyclerView recyclerView;
     public Games[] games;
-    public List<Games> gamesFiltered;
 
     GamesAdapter gamesAdapter;
     LottieAnimationView progressAnimationView;
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements GamesAdapter.Game
     ViewGroup landScapeLayout;
     @BindView(R.id.main_activity_container)
     ViewGroup portraitLayout;
-
+    LayoutManager staggeredLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,9 +62,11 @@ public class MainActivity extends AppCompatActivity implements GamesAdapter.Game
 
         //if in landscape mode, view 2 items in the same row
         if (findViewById(R.id.main_activity_container_land) != null)
-            recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+            staggeredLayoutManager=new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         else if (findViewById(R.id.main_activity_container) != null)
-            recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
+            staggeredLayoutManager=new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
+
+        recyclerView.setLayoutManager(staggeredLayoutManager);
         cm = (ConnectivityManager) this.getSystemService(CONNECTIVITY_SERVICE);
 
         handleConnectivityStateChanges();
@@ -224,9 +226,4 @@ public class MainActivity extends AppCompatActivity implements GamesAdapter.Game
 
 
     }
-
 }
-//@TODO: 06-Jan-18  design & implement detailed activity
-//@TODO: 06-Jan-18  polish toolbar and navigation, and search functionality
-//@TODO: appBar title filter (latest cracks& all games)
-//@TODO: hot games slider

@@ -15,5 +15,6 @@
     <string name="connectionErrorString">Connection error</string>
     <string name="tapToRetryString">Tap to retry</string>
     <string name="platform">platform</string>
+    <string name="imgCoverTransition">imageCoverTransition</string>
 
 </resources>

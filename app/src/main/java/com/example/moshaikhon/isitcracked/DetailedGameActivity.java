@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.example.moshaikhon.isitcracked.GameUtils;
 import com.example.moshaikhon.isitcracked.R;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
@@ -20,11 +21,7 @@ import butterknife.ButterKnife;
 
 
 public class DetailedGameActivity extends AppCompatActivity {
-    // Extra name for the ID parameter
-    public static final String EXTRA_PARAM_ID = "detail:_id";
 
-    // View name of the header image. Used for activity scene transitions
-    public static final String VIEW_NAME_HEADER_IMAGE = "detail:header:image";
 
 
     @BindView(R.id.activity_detailed_toolBar)
@@ -104,8 +101,7 @@ public class DetailedGameActivity extends AppCompatActivity {
                 ,bundle.getString(getString(R.string.origin)));
         setCrackStatusIcon(bundle.getString(getString(R.string.crackDate)));
 
-       loadImage(bundle);
-
+loadThumbnail(bundle.getString(getString(R.string.gameImage)));
 
 
     }
@@ -118,24 +114,36 @@ public class DetailedGameActivity extends AppCompatActivity {
 
     private void loadImage(Bundle game) {
         // Set the title TextView to the item's name and author
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP &&
+        loadThumbnail(game.getString(getString(R.string.gameImage)));
+     /*   if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP &&
                 addTransitionListener(game.getString(getString(R.string.imageCover)))) {
             // If we're running on Lollipop and we have added a listener to the shared element
             // transition, load the thumbnail. The listener will load the full-size image when
             // the transition is complete.
-            loadThumbnail(game.getString(getString(R.string.gameImage)));
-        } else {
+            );*/
+        /*} else {
             // If all other cases we should just load the full-size image now
             loadFullSizeImage(game.getString(getString(R.string.imageCover)));
-        }
+        }*/
     }
     private void loadThumbnail(String imgURL) {
+        supportPostponeEnterTransition();
 
         Picasso.with(this)
                 .load(imgURL)
                 .noFade()
-                .into(detailedGameCoverImageView);
+                .fit()
+                .into(detailedGameCoverImageView, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        supportStartPostponedEnterTransition();
+                    }
+
+                    @Override
+                    public void onError() {
+                        supportStartPostponedEnterTransition();
+                    }
+                });
 
     }
 

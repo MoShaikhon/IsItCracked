@@ -1,5 +1,7 @@
 package com.example.moshaikhon.isitcracked.adapter;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.moshaikhon.isitcracked.DetailedGameActivity;
 import com.example.moshaikhon.isitcracked.GameUtils;
+import com.example.moshaikhon.isitcracked.MainActivity;
 import com.example.moshaikhon.isitcracked.R;
 import com.example.moshaikhon.isitcracked.model.Games;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -76,10 +79,14 @@ public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.MyViewHolder
         GameUtils.changeStatusAndIcon(holder.itemView.getContext(), holder.crackedIcon, holder.crackedStatus);
         loadImage(gamesList.get(position).getImage(), holder.itemView.getContext(), holder.gameImage);
 
+
     }
 
     private void loadImage(String imageURL, Context context, RoundedImageView imageView) {
-        Picasso.with(context).load(imageURL).into(imageView);
+        Picasso.with(context)
+                .load(imageURL)
+            
+                .into(imageView);
 
     }
 
@@ -112,6 +119,7 @@ public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.MyViewHolder
             sendToDetailActivity(gamesList.get(adapterPosition), v.getContext());
             mOnClickListener.onClick();
 
+
         }
 
         public void sendToDetailActivity(Games game, Context context) {
@@ -134,12 +142,15 @@ public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.MyViewHolder
             bundle.putString(context.getString(R.string.origin), game.getOrigin());
             bundle.putString(context.getString(R.string.platform), game.getPlatform());
 
+            Bundle bundle1= ActivityOptions.makeSceneTransitionAnimation((Activity)context,
+                    gameImage,context.getString(R.string.imgCoverTransition)).toBundle();
 
             intent.putExtras(bundle);
-            context.startActivity(intent);
+            context.startActivity(intent,bundle1);
 
 
         }
+
 
     }
 }

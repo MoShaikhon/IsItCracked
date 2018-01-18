@@ -10,7 +10,7 @@
         android:id="@+id/activity_detailed_toolBar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@android:drawable/screen_background_dark_transparent"
+        android:background="@android:color/transparent"
         android:elevation="4dp"
         android:theme="@style/DetailedActivityToolBarStyle"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>

@@ -2,14 +2,10 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_activity_600dp_container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:background="@color/primaryLightColor"
-    android:onClick="clickToRetry"
-    android:clickable="true"
-    tools:context="com.example.moshaikhon.isitcracked.MainActivity"
-    android:focusable="true">
+    android:id="@+id/main_activity_600dp_land_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/my_toolbar"
@@ -18,25 +14,44 @@
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
         android:theme="@style/MainActivityToolBarStyle"
-        app:layout_constraintBottom_toTopOf="@+id/guideline17"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/guideline20"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:titleTextColor="@android:color/white" />
 
-    <FrameLayout
-        android:id="@+id/master_game_list_fragment_container"
+    <android.support.v7.widget.CardView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        app:cardElevation="@dimen/cardview_default_elevation"
+        app:cardCornerRadius="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/guideline19"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guideline17">
+        app:layout_constraintTop_toBottomOf="@id/guideline20"
+        app:cardBackgroundColor="@color/primaryLightColor"
+        android:layout_margin="@dimen/card_containing_masterFrag_margins"
+        >
+    <FrameLayout
+        android:id="@+id/master_game_list_fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     </FrameLayout>
+    </android.support.v7.widget.CardView>
+
+    <View
+        android:layout_width="2dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/guideline19"
+        app:layout_constraintTop_toTopOf="@id/guideline20"
+         />
+
+
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/progressAnimationView"
@@ -45,13 +60,34 @@
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/guideline16"
+        app:layout_constraintBottom_toTopOf="@+id/guideline21"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/my_toolbar"
         app:lottie_autoPlay="true"
         app:lottie_fileName="loading.json"
         app:lottie_loop="true" />
+
+    <android.support.v7.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:cardElevation="@dimen/cardview_default_elevation"
+        app:cardCornerRadius="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:cardBackgroundColor="@color/primaryLightColor"
+        app:layout_constraintStart_toEndOf="@id/guideline19"
+        app:layout_constraintTop_toBottomOf="@id/guideline20"
+        android:layout_margin="8dp"
+        >
+
+        <FrameLayout
+            android:id="@+id/detailed_fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            />
+    </android.support.v7.widget.CardView>
 
     <include
         android:id="@+id/connectionStatusContainer"
@@ -66,14 +102,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/guideline18" />
 
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline17"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="?attr/actionBarSize" />
-
     <android.support.constraint.Guideline
         android:id="@+id/guideline18"
         android:layout_width="wrap_content"
@@ -82,11 +110,28 @@
         app:layout_constraintGuide_percent="0.2" />
 
     <android.support.constraint.Guideline
-        android:id="@+id/guideline16"
+        android:id="@+id/guideline19"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.35" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="?attr/actionBarSize"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline21"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.85" />
+
+
+
 
 
 </android.support.constraint.ConstraintLayout>

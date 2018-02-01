@@ -13,23 +13,15 @@
         android:background="@android:color/transparent"
         android:elevation="4dp"
         android:theme="@style/DetailedActivityToolBarStyle"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/gameCardView"
+
+    <FrameLayout
+        android:id="@+id/detailed_activity_fragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:elevation="12dp"
-        app:cardBackgroundColor="@color/primaryLightColor"
-        app:cardPreventCornerOverlap="false">
+        android:layout_height="match_parent">
 
-<include
-    layout="@layout/detailed_layout_content"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    </FrameLayout>
 
-</include>
-
-    </android.support.v7.widget.CardView>
 
 </RelativeLayout>

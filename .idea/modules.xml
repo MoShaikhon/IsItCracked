@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/IsItCracked.iml" filepath="$PROJECT_DIR$/IsItCracked.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/IsItCracked.iml" filepath="$PROJECT_DIR$/.idea/IsItCracked.iml" />
+      <module fileurl="file://C:\AndroidStudioProjects\IsItCracked\IsItCracked.iml" filepath="C:\AndroidStudioProjects\IsItCracked\IsItCracked.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

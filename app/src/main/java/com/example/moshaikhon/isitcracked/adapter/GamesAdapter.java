@@ -30,20 +30,21 @@ import java.util.List;
 
 public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.MyViewHolder> {
 
-    private Games[] games;
     private List<Games> gamesList;
     private List<Games> originalGameList;
 
     final private GameClickListener mOnClickListener;
 
     public interface GameClickListener {
-        void onClick();
+        void onClick(int position,Games game);
     }
 
     public GamesAdapter(Games[] games, GameClickListener onClickListener) {
+        if (games!=null) {
+            gamesList = new ArrayList<>(Arrays.asList(games));
+            originalGameList=new ArrayList<>(Arrays.asList(games));
+        }
 
-        gamesList = new ArrayList<>(Arrays.asList(games));
-        originalGameList=new ArrayList<>(Arrays.asList(games));
         mOnClickListener = onClickListener;
     }
 
@@ -116,40 +117,11 @@ public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.MyViewHolder
         @Override
         public void onClick(View v) {
             int adapterPosition = getAdapterPosition();
-            sendToDetailActivity(gamesList.get(adapterPosition), v.getContext());
-            mOnClickListener.onClick();
+            mOnClickListener.onClick(adapterPosition,gamesList.get(adapterPosition));
 
 
         }
 
-        public void sendToDetailActivity(Games game, Context context) {
-
-            String releaseDate = game.getReleaseDate();
-            String crackdate = game.getCrackDate();
-            Intent intent = new Intent(context, DetailedGameActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putString(context.getString(R.string.isAAA), game.getIsAAA());
-            bundle.putString(context.getString(R.string.imageCover), game.getImageCover());
-            bundle.putString(context.getString(R.string.releaseDate), releaseDate);
-            bundle.putString(context.getString(R.string.crackDate), crackdate);
-            bundle.putString(context.getString(R.string.originalPrice), game.getOriginalPrice());
-            bundle.putString(context.getString(R.string.drm), game.getDrm1());
-            bundle.putString(context.getString(R.string.gameImage), game.getImage());
-            bundle.putString(context.getString(R.string.crackCount), game.getNfosCount());
-            bundle.putString(context.getString(R.string.rating), game.getRatings());
-            bundle.putString(context.getString(R.string.sceneGroup), game.getSceneGroup1());
-            bundle.putString(context.getString(R.string.alterativePrice), game.getAlternativePrice());
-            bundle.putString(context.getString(R.string.origin), game.getOrigin());
-            bundle.putString(context.getString(R.string.platform), game.getPlatform());
-
-            Bundle bundle1= ActivityOptions.makeSceneTransitionAnimation((Activity)context,
-                    gameImage,context.getString(R.string.imgCoverTransition)).toBundle();
-
-            intent.putExtras(bundle);
-            context.startActivity(intent,bundle1);
-
-
-        }
 
 
     }

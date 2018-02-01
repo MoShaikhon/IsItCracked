@@ -16,5 +16,6 @@
     <string name="tapToRetryString">Tap to retry</string>
     <string name="platform">platform</string>
     <string name="imgCoverTransition">imageCoverTransition</string>
+    <string name="search_title">Find a game..</string>
 
 </resources>

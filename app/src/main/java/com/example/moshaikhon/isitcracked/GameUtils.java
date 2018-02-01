@@ -64,7 +64,7 @@ public class GameUtils {
 
         switch (platform) {
             case "steam":
-                imageView.setImageResource(R.drawable.ic_steam_vector);
+                imageView.setImageResource(R.drawable.steam_logo);
                 break;
             case "origin":
                 imageView.setImageResource(R.drawable.ic_origins);

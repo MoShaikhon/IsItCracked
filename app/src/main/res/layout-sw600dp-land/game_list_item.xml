@@ -2,10 +2,9 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/gameCardView"
-    android:layout_width="@dimen/game_card_item_width"
+    android:layout_width="match_parent"
     android:layout_height="@dimen/game_card_item_height"
-    android:layout_marginBottom="16dp"
-    android:layout_marginEnd="16dp"
+    android:layout_marginBottom="@dimen/game_item_marginBottom"
     app:cardBackgroundColor="@color/primaryColor"
     app:cardCornerRadius="12dp"
     app:cardElevation="2dp"
@@ -56,7 +55,7 @@
             android:fontFamily="@font/neusa_medium"
             android:text="Cracked"
             android:textColor="@color/secondaryColorAccent"
-            android:textSize="@dimen/crack_status_textSize"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/gameNameTextView"
             app:layout_constraintStart_toEndOf="@+id/statusIconImageView"
@@ -66,8 +65,10 @@
             android:id="@+id/guideline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.75" />
+            app:layout_constraintGuide_percent="0.73" />
 
         <ImageView
             android:id="@+id/statusIconImageView"

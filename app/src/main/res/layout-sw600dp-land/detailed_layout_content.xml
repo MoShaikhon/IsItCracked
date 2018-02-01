@@ -3,31 +3,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="@dimen/detailed_content_padding"
     android:background="@color/primaryLightColor">
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/detailedGameCoverImageView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginEnd="@dimen/game_cover_detailedFrag_marginEnd"
+        android:layout_marginStart="@dimen/game_cover_detailedFrag_marginStart"
+        android:layout_marginTop="@dimen/game_cover_detailedFrag_marginTop"
         android:adjustViewBounds="true"
         android:scaleType="fitXY"
-        android:transitionName="@string/imgCoverTransition"
         android:src="@drawable/g2"
+        android:transitionName="@string/imgCoverTransition"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:riv_corner_radius="12dp"
-        />
+        app:riv_corner_radius="12dp" />
 
     <ImageView
         android:id="@+id/platformIconImageView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
-        android:elevation="4dp"
+        android:layout_marginBottom="@dimen/platform_icon_marginBottom"
+        android:layout_marginEnd="@dimen/platform_icon_marginEnd"
+        android:layout_marginTop="@dimen/platform_icon_marginTop"
         app:layout_constraintBottom_toTopOf="@+id/guideline7"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
@@ -38,8 +40,8 @@
         android:id="@+id/crackStatusImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="@dimen/crack_icon_detailedFrag_marginBottom"
+        android:layout_marginTop="@dimen/crack_icon_detailedFrag_marginTop"
         app:layout_constraintBottom_toTopOf="@+id/guideline15"
         app:layout_constraintStart_toStartOf="@+id/include3"
         app:layout_constraintTop_toTopOf="@+id/guideline"
@@ -107,14 +109,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.34" />
+        app:layout_constraintGuide_percent="0.37" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.22" />
+        app:layout_constraintGuide_percent="0.27" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline7"
@@ -122,7 +124,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.45" />
-
 
 
     <android.support.constraint.Guideline
@@ -138,6 +139,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.5" />
+
     <android.support.constraint.Guideline
         android:id="@+id/guideline14"
         android:layout_width="wrap_content"

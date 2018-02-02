@@ -1,6 +1,8 @@
 package com.example.moshaikhon.isitcracked;
 
+import android.animation.Animator;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,6 +13,10 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.transition.Transition;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewAnimationUtils;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,99 +38,22 @@ public class DetailedGameActivity extends AppCompatActivity {
     Toolbar mToolbar;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detailed_game);
         ButterKnife.bind(this);
+
+        goToMainActivityIfTabletChangedOrientationAtRunTime();
+
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        fragmentManager = getSupportFragmentManager();
-        detailedGameInfoFragment = new DetailedGameInfoFragment();
 
-        Intent intent = getIntent();
-        if (intent.getExtras() != null) {
-            Bundle bundle = intent.getExtras();
-            detailedGameInfoFragment.setGameBundle(bundle);
-            fragmentManager.beginTransaction()
-                    .add(R.id.detailed_activity_fragment, detailedGameInfoFragment)
-                   // .addSharedElement(findViewById(R.id.detailedGameCoverImageView),getString(R.string.imgCoverTransition))
-                    .commit();
-
-
-
-        }
+        getTheIntentAndItsBundleAndAddFragment();
 
 
     }
-
-
-
-        //loadThumbnail(bundle.getString(getString(R.string.gameImage)));
-
-
-
-
-
-
-
-    /**
-     * Load the item's full-size image into our ImageView
-     */
-    /*
-    private void loadFullSizeImage(String imgURL) {
-
-        Picasso.with(this)
-                .load(imgURL)
-                .noFade()
-                .noPlaceholder()
-                .into(detailedGameCoverImageView);
-    }
-
-    private boolean addTransitionListener(final String imgURL) {
-        final Transition transition = getWindow().getSharedElementEnterTransition();
-
-        if (transition != null) {
-            // There is an entering shared element transition so add a listener to it
-            transition.addListener(new Transition.TransitionListener() {
-                @Override
-                public void onTransitionEnd(Transition transition) {
-                    // As the transition has ended, we can now load the full-size image
-                    loadFullSizeImage(imgURL);
-
-                    // Make sure we remove ourselves as a listener
-                    transition.removeListener(this);
-                }
-
-                @Override
-                public void onTransitionStart(Transition transition) {
-                    // No-op
-                }
-
-                @Override
-                public void onTransitionCancel(Transition transition) {
-                    // Make sure we remove ourselves as a listener
-                    transition.removeListener(this);
-                }
-
-                @Override
-                public void onTransitionPause(Transition transition) {
-                    // No-op
-                }
-
-                @Override
-                public void onTransitionResume(Transition transition) {
-                    // No-op
-                }
-            });
-            return true;
-        }
-
-        // If we reach here then we have not added a listener
-        return false;
-    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -134,5 +63,24 @@ public class DetailedGameActivity extends AppCompatActivity {
 
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void goToMainActivityIfTabletChangedOrientationAtRunTime() {
+        Configuration configuration = getResources().getConfiguration();
+        if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE && findViewById(R.id.defaultGameCardView) != null)
+            startActivity(new Intent(this, MainActivity.class));
+    }
+
+    private void getTheIntentAndItsBundleAndAddFragment() {
+        fragmentManager = getSupportFragmentManager();
+        detailedGameInfoFragment = new DetailedGameInfoFragment();
+        Intent intent = getIntent();
+        if (intent.getExtras() != null) {
+            Bundle bundle = intent.getExtras();
+            detailedGameInfoFragment.setGameBundle(bundle);
+            fragmentManager.beginTransaction()
+                    .add(R.id.detailed_activity_fragment, detailedGameInfoFragment)
+                    .commit();
+        }
     }
 }

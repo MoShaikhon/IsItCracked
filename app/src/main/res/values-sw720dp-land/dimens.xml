@@ -2,21 +2,20 @@
 <resources>
 
 
-    <dimen name="game_card_item_width">-1dp</dimen>
-    <dimen name="game_card_item_height">208dp</dimen>
-    <dimen name="game_item_marginBottom">8dp</dimen>
+    <dimen name="game_card_item_height">210dp</dimen>
+    <dimen name="game_item_marginBottom">16dp</dimen>
     <dimen name="game_item_marginEnd">8dp</dimen>
     <dimen name="game_name_textSize">16sp</dimen>
     <dimen name="crack_status_textSize">14sp</dimen>
     <dimen name="crack_status_textView_marginBottom">8dp</dimen>
     <dimen name="crack_status_textView_marginStart">3dp</dimen>
-    <dimen name="crack_status_icon_width">13dp</dimen>
-    <dimen name="crack_status_icon_height">13dp</dimen>
+    <dimen name="crack_status_icon_width">14dp</dimen>
+    <dimen name="crack_status_icon_height">14dp</dimen>
     <dimen name="game_name_textView_marginStart">8dp</dimen>
     <dimen name="game_name_textView_marginTop">0dp</dimen>
     <dimen name="status_icon_marginStart">8dp</dimen>
     <dimen name="recyclerView_padding">16dp</dimen>
-    <dimen name="info_text_size">20sp</dimen>
+    <dimen name="info_text_size">23sp</dimen>
     <dimen name="card_containing_masterFrag_margins">16dp</dimen>
     <dimen name="detailed_content_padding">8dp</dimen>
     <dimen name="game_cover_detailedFrag_marginEnd">8dp</dimen>
@@ -37,7 +36,8 @@
     <dimen name="release_crack_dates_include_marginEnd">8dp</dimen>
     <dimen name="release_crack_dates_include_marginStart">8dp</dimen>
     <dimen name="crack_status_icon_detail_marginStart">8dp</dimen>
-    <dimen name="detailed_info_icons_height">17dp</dimen>
-    <dimen name="detailed_info_icons_width">18dp</dimen>
+    <dimen name="detailed_info_icons_height">24dp</dimen>
+    <dimen name="detailed_info_icons_width">25dp</dimen>
+    <dimen name="card_containing_detailFrag_margins">16dp</dimen>
 
 </resources>

@@ -36,4 +36,5 @@
     <dimen name="crack_status_icon_detail_marginStart">16dp</dimen>
     <dimen name="detailed_info_icons_height">28dp</dimen>
     <dimen name="detailed_info_icons_width">28dp</dimen>
+    <dimen name="card_containing_detailFrag_margins">8dp</dimen>
 </resources>

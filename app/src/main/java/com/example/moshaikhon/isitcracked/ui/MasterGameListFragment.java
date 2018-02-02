@@ -35,7 +35,6 @@ public class MasterGameListFragment extends Fragment implements GamesAdapter.Gam
 
     @Override
     public void onClick(int position,Games game) {
-        Toast.makeText(MasterGameListFragment.this.getContext(),"item# "+position,Toast.LENGTH_SHORT).show();
         mCallback.onGameClicked(position,game);
 
     }
@@ -57,7 +56,6 @@ public class MasterGameListFragment extends Fragment implements GamesAdapter.Gam
             gamesAdapter = new GamesAdapter(games, this);
             recyclerView.setAdapter(gamesAdapter);
         }
-
 
         return roootView;
     }

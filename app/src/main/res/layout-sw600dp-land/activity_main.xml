@@ -78,7 +78,7 @@
         app:cardBackgroundColor="@color/primaryLightColor"
         app:layout_constraintStart_toEndOf="@id/guideline19"
         app:layout_constraintTop_toBottomOf="@id/guideline20"
-        android:layout_margin="8dp"
+        android:layout_margin="@dimen/card_containing_detailFrag_margins"
         >
 
         <FrameLayout

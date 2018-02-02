@@ -1,5 +1,6 @@
 package com.example.moshaikhon.isitcracked;
 
+import android.animation.Animator;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -74,7 +76,7 @@ public class DetailedGameInfoFragment extends Fragment {
         ButterKnife.bind(this,rootView);
         if (gameBundle != null)
             bindData(gameBundle);
-//        Log.d("detailFragz", GameUtils.getNfoString(gameBundle.getString(getString(R.string.crackCount))));
+
         return rootView;
 
     }
@@ -83,33 +85,36 @@ public class DetailedGameInfoFragment extends Fragment {
         if (nfoTextView != null) {
 
 
-        nfoTextView.setText(GameUtils.getNfoString(bundle.getString(getString(R.string.crackCount))));
-        ratingTextView.setText(GameUtils.getRatingString(bundle.getString(getString(R.string.rating))));
-        priceTextView.setText(GameUtils.getPriceString(bundle.getString(getString(R.string.originalPrice))
-                , bundle.getString(getString(R.string.alterativePrice))));
-        releaseDateTextView.setText(GameUtils.getReleaseDate(bundle.getString(getString(R.string.releaseDate))));
-        crackDateTextView.setText(GameUtils.getCrackDate(bundle.getString(getString(R.string.crackDate))));
-        isAAATextView.setText(GameUtils.GetAAA(bundle.getString(getString(R.string.isAAA))));
-        sceneGroupTextView.setText(GameUtils.getSceneGroup(bundle.getString(getString(R.string.sceneGroup))));
-        drmTextView.setText(GameUtils.getDRMProtection(bundle.getString(getString(R.string.drm))));
-        GameUtils.getPlatformIcon(platformIconImageView
-                , bundle.getString(getString(R.string.platform))
-                , bundle.getString(getString(R.string.origin)));
-        setCrackStatusIcon(bundle.getString(getString(R.string.crackDate)));
+            nfoTextView.setText(GameUtils.getNfoString(bundle.getString(getString(R.string.crackCount))));
+            ratingTextView.setText(GameUtils.getRatingString(bundle.getString(getString(R.string.rating))));
+            priceTextView.setText(GameUtils.getPriceString(bundle.getString(getString(R.string.originalPrice))
+                    , bundle.getString(getString(R.string.alterativePrice))));
+            releaseDateTextView.setText(GameUtils.getReleaseDate(bundle.getString(getString(R.string.releaseDate))));
+            crackDateTextView.setText(GameUtils.getCrackDate(bundle.getString(getString(R.string.crackDate))));
+            isAAATextView.setText(GameUtils.GetAAA(bundle.getString(getString(R.string.isAAA))));
+            sceneGroupTextView.setText(GameUtils.getSceneGroup(bundle.getString(getString(R.string.sceneGroup))));
+            drmTextView.setText(GameUtils.getDRMProtection(bundle.getString(getString(R.string.drm))));
+            GameUtils.getPlatformIcon(platformIconImageView
+                    , bundle.getString(getString(R.string.platform))
+                    , bundle.getString(getString(R.string.origin)));
+            setCrackStatusIcon(bundle.getString(getString(R.string.crackDate)));
 
             loadThumbnail(bundle.getString(getString(R.string.gameImage)));
+            detailedGameCoverImageView.post(new Runnable() {
+                @Override
+                public void run() {
+                    if (getActivity().findViewById(R.id.detailed_activity_fragment)!=null)
+                    AnimationUtils.circularReveal(getActivity().findViewById(R.id.detailed_activity_fragment));
 
-       /* Picasso.with(this.getContext())
-                .load(bundle.getString(getString(R.string.gameImage)))
-                .noFade()
-                .fit()
-                .into(detailedGameCoverImageView);*/
                 }
+            });
+
+        }
 
     }
 
     private void loadThumbnail(String imgURL) {
-        ActivityCompat.postponeEnterTransition(getActivity());
+       // ActivityCompat.postponeEnterTransition(getActivity());
 
         Picasso.with(this.getContext())
                 .load(imgURL)
@@ -118,12 +123,12 @@ public class DetailedGameInfoFragment extends Fragment {
                 .into(detailedGameCoverImageView, new Callback() {
                     @Override
                     public void onSuccess() {
-                        ActivityCompat.startPostponedEnterTransition(DetailedGameInfoFragment.this.getActivity());
+                       // ActivityCompat.startPostponedEnterTransition(DetailedGameInfoFragment.this.getActivity());
                     }
 
                     @Override
                     public void onError() {
-                        ActivityCompat.startPostponedEnterTransition(DetailedGameInfoFragment.this.getActivity());
+                     //   ActivityCompat.startPostponedEnterTransition(DetailedGameInfoFragment.this.getActivity());
                     }
                 });
     }
@@ -139,4 +144,5 @@ public class DetailedGameInfoFragment extends Fragment {
     public void setGameBundle(Bundle gameBundle) {
         this.gameBundle = gameBundle;
     }
+
 }

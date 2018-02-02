@@ -89,7 +89,7 @@ public class GameUtils {
 
     public static String getRatingString(String rating) {
         rating = fixRating(rating);
-        return "Rating: " + rating + "%";
+        return "Rating: " + rating ;
     }
 
     public static String getNfoString(String nfos) {
@@ -120,7 +120,7 @@ public class GameUtils {
     public static String fixRating(String rating) {
         if (rating.equals("undefined") || Integer.parseInt(rating) < 1)
             return "Undefined";
-        return rating;
+        return rating+ "%";
     }
 
     public static String fixPlatform(String platform, String originPlatform) {

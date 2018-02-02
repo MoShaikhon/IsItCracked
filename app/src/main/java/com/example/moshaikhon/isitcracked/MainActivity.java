@@ -1,5 +1,7 @@
 package com.example.moshaikhon.isitcracked;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.ActivityOptions;
 import android.app.SearchManager;
 import android.content.Context;
@@ -17,6 +19,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.support.v7.widget.SearchView;
+import android.view.ViewAnimationUtils;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.moshaikhon.isitcracked.adapter.GamesAdapter;
@@ -118,26 +121,19 @@ public class MainActivity extends AppCompatActivity implements MasterGameListFra
                 public void run() {
                     hideProgressAnimationView();
                     createAndPopulateMasterGameListFragment(games);
+                    animateActivityEntry();
+                    if (mTwoPaneMode) {
+                        createOrReplaceDetailedGameFragment(createGameBundle(games[0]));
+                    }
 
                 }
             });
-
-            Log.i("first game: ", games[0].getTitle());
-
 
         } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
-
-    /*@Override
-    public void onClick(int position) {
-        if (findViewById(R.id.main_activity_600dp_land_container) != null)
-
-
-
-    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -152,9 +148,41 @@ public class MainActivity extends AppCompatActivity implements MasterGameListFra
                 (SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setSearchableInfo(
                 searchManager.getSearchableInfo(getComponentName()));
+        searchView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (mTwoPaneMode) {
+                    if (hasFocus) {
+                        AnimationUtils.circularHide(findViewById(R.id.detailed_fragment_container));
+                        fragmentManager.beginTransaction().hide(detailedGameInfoFragment).commitNowAllowingStateLoss();
+                    }
+                }
+            }
+        });
+        searchView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AnimationUtils.circularReveal(findViewById(R.id.detailed_fragment_container));
+                fragmentManager.beginTransaction().show(detailedGameInfoFragment).commitNowAllowingStateLoss();
+            }
+        });
+        searchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mTwoPaneMode) {
+                    AnimationUtils.circularHide(findViewById(R.id.detailed_fragment_container));
+                    fragmentManager.beginTransaction().hide(detailedGameInfoFragment).commitNowAllowingStateLoss();
+
+                }
+            }
+        });
         searchView.setOnCloseListener(new SearchView.OnCloseListener() {
             @Override
             public boolean onClose() {
+                if (mTwoPaneMode) {
+                    AnimationUtils.circularReveal(findViewById(R.id.detailed_fragment_container));
+                    fragmentManager.beginTransaction().show(detailedGameInfoFragment).commitNowAllowingStateLoss();
+                }
                 return true;
             }
         });
@@ -172,8 +200,10 @@ public class MainActivity extends AppCompatActivity implements MasterGameListFra
             public boolean onQueryTextChange(String newText) {
                 if (newText != null && masterGameListFragment.getGamesAdapter() != null) {
                     masterGameListFragment.getGamesAdapter().filter(newText);
-                    if (detailedGameInfoFragment!=null)
-                    fragmentManager.beginTransaction().hide(detailedGameInfoFragment).commit();
+                    if (detailedGameInfoFragment != null) {
+                        AnimationUtils.circularHide(findViewById(R.id.detailed_fragment_container));
+                        fragmentManager.beginTransaction().hide(detailedGameInfoFragment).commit();
+                    }
                 }
                 return true;
             }
@@ -249,14 +279,21 @@ public class MainActivity extends AppCompatActivity implements MasterGameListFra
     @Override
     public void onGameClicked(int position, Games game) {
 
-        if (findViewById(R.id.main_activity_600dp_land_container) == null) {
+        if (!mTwoPaneMode) {
             sendToDetailActivity(game, MainActivity.this);
 
         } else {
+
+            // if user clicks an item while searchView has focus then clear focus
             if (searchView.hasFocus())
                 searchView.clearFocus();
-                createOrReplaceDetailedGameFragment(createGameBundle(game));
-            fragmentManager.beginTransaction().show(detailedGameInfoFragment).commit();
+
+            createOrReplaceDetailedGameFragment(createGameBundle(game));
+            fragmentManager.beginTransaction()
+                    .show(detailedGameInfoFragment)
+                    .commitNowAllowingStateLoss();
+            AnimationUtils.circularReveal(findViewById(R.id.detailed_fragment_container));
+
 
         }
     }
@@ -267,7 +304,7 @@ public class MainActivity extends AppCompatActivity implements MasterGameListFra
         Bundle detailedGameBundle = createGameBundle(game);
         Bundle transitionBundle = createTransitionBundle();
         intent.putExtras(detailedGameBundle);
-        startActivity(intent, transitionBundle);
+        startActivity(intent);
 
 
     }
@@ -280,6 +317,7 @@ public class MainActivity extends AppCompatActivity implements MasterGameListFra
             fragmentManager.beginTransaction()
                     .add(R.id.detailed_fragment_container, detailedGameInfoFragment)
                     .commit();
+            AnimationUtils.circularReveal(findViewById(R.id.detailed_fragment_container));
         } else {
             detailedGameInfoFragment = new DetailedGameInfoFragment();
             detailedGameInfoFragment.setGameBundle(bundle);
@@ -340,5 +378,47 @@ public class MainActivity extends AppCompatActivity implements MasterGameListFra
         return columnNumber;
 
     }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        animateActivityEntry();
+
+    }
+    private void animateActivityEntry(){
+        final View activity_main_layout;
+
+        if (findViewById(R.id.main_activity_container) != null) {
+            activity_main_layout = findViewById(R.id.main_activity_container);
+            activity_main_layout.post(new Runnable() {
+                @Override
+                public void run() {
+                    AnimationUtils.circularReveal(activity_main_layout);
+                }
+            });
+
+        } else if (findViewById(R.id.main_activity_container_land) != null) {
+            activity_main_layout = findViewById(R.id.main_activity_container_land);
+            activity_main_layout.post(new Runnable() {
+                @Override
+                public void run() {
+
+                    AnimationUtils.circularReveal(activity_main_layout);
+                }
+            });
+
+        } else if (findViewById(R.id.main_activity_600dp_container) != null) {
+            activity_main_layout = findViewById(R.id.main_activity_600dp_container);
+            activity_main_layout.post(new Runnable() {
+                @Override
+                public void run() {
+
+                    AnimationUtils.circularReveal(activity_main_layout);
+
+                }
+            });
+        }}
+
 
 }

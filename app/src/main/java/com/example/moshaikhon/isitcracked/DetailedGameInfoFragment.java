@@ -114,7 +114,7 @@ public class DetailedGameInfoFragment extends Fragment {
     }
 
     private void loadThumbnail(String imgURL) {
-       // ActivityCompat.postponeEnterTransition(getActivity());
+     //ActivityCompat.postponeEnterTransition(getActivity());
 
         Picasso.with(this.getContext())
                 .load(imgURL)
@@ -123,12 +123,13 @@ public class DetailedGameInfoFragment extends Fragment {
                 .into(detailedGameCoverImageView, new Callback() {
                     @Override
                     public void onSuccess() {
-                       // ActivityCompat.startPostponedEnterTransition(DetailedGameInfoFragment.this.getActivity());
+
+                     //  ActivityCompat.startPostponedEnterTransition(DetailedGameInfoFragment.this.getActivity());
                     }
 
                     @Override
                     public void onError() {
-                     //   ActivityCompat.startPostponedEnterTransition(DetailedGameInfoFragment.this.getActivity());
+                    //  ActivityCompat.startPostponedEnterTransition(DetailedGameInfoFragment.this.getActivity());
                     }
                 });
     }

@@ -121,10 +121,11 @@ public class MainActivity extends AppCompatActivity implements MasterGameListFra
                 public void run() {
                     hideProgressAnimationView();
                     createAndPopulateMasterGameListFragment(games);
-                    animateActivityEntry();
                     if (mTwoPaneMode) {
                         createOrReplaceDetailedGameFragment(createGameBundle(games[0]));
                     }
+                    animateActivityEntry();
+
 
                 }
             });
@@ -153,6 +154,7 @@ public class MainActivity extends AppCompatActivity implements MasterGameListFra
             public void onFocusChange(View v, boolean hasFocus) {
                 if (mTwoPaneMode) {
                     if (hasFocus) {
+                        Log.i("searchView state:", "setOnFocusChange mTwoPaneMode and has focus");
                         AnimationUtils.circularHide(findViewById(R.id.detailed_fragment_container));
                         fragmentManager.beginTransaction().hide(detailedGameInfoFragment).commitNowAllowingStateLoss();
                     }
@@ -162,14 +164,37 @@ public class MainActivity extends AppCompatActivity implements MasterGameListFra
         searchView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AnimationUtils.circularReveal(findViewById(R.id.detailed_fragment_container));
-                fragmentManager.beginTransaction().show(detailedGameInfoFragment).commitNowAllowingStateLoss();
+                if (mTwoPaneMode) {
+                    Log.i("searchView state:", "onClick mTwoPaneMode");
+
+                    AnimationUtils.circularHide(findViewById(R.id.detailed_fragment_container));
+                    fragmentManager.beginTransaction().hide(detailedGameInfoFragment).commitNowAllowingStateLoss();
+                }
+            }
+        });
+
+        searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (mTwoPaneMode) {
+                    fragmentManager.beginTransaction().hide(detailedGameInfoFragment).commitNowAllowingStateLoss();
+
+                    if (hasFocus) {
+                        Log.i("searchView state:", "setOnQueryTextFocusChange mTwoPaneMode and has focus");
+
+                        AnimationUtils.circularHide(findViewById(R.id.detailed_fragment_container));
+                        fragmentManager.beginTransaction().hide(detailedGameInfoFragment).commitNowAllowingStateLoss();
+                    }
+
+                }
             }
         });
         searchView.setOnSearchClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mTwoPaneMode) {
+                    Log.i("searchView state:", "setOnSearchClickListener mTwoPaneMode");
+
                     AnimationUtils.circularHide(findViewById(R.id.detailed_fragment_container));
                     fragmentManager.beginTransaction().hide(detailedGameInfoFragment).commitNowAllowingStateLoss();
 
@@ -180,8 +205,11 @@ public class MainActivity extends AppCompatActivity implements MasterGameListFra
             @Override
             public boolean onClose() {
                 if (mTwoPaneMode) {
-                    AnimationUtils.circularReveal(findViewById(R.id.detailed_fragment_container));
+                    Log.i("searchView state:", "setOnCloseListener mTwoPaneMode");
+
                     fragmentManager.beginTransaction().show(detailedGameInfoFragment).commitNowAllowingStateLoss();
+                    AnimationUtils.circularReveal(findViewById(R.id.detailed_fragment_container));
+
                 }
                 return true;
             }
@@ -283,16 +311,18 @@ public class MainActivity extends AppCompatActivity implements MasterGameListFra
             sendToDetailActivity(game, MainActivity.this);
 
         } else {
-
             // if user clicks an item while searchView has focus then clear focus
-            if (searchView.hasFocus())
+            if (searchView.hasWindowFocus()||searchView.hasFocus()){
+                fragmentManager.beginTransaction()
+                        .hide(detailedGameInfoFragment)
+                        .commit();
                 searchView.clearFocus();
 
-            createOrReplaceDetailedGameFragment(createGameBundle(game));
-            fragmentManager.beginTransaction()
-                    .show(detailedGameInfoFragment)
-                    .commitNowAllowingStateLoss();
+            }
+
+
             AnimationUtils.circularReveal(findViewById(R.id.detailed_fragment_container));
+            createOrReplaceDetailedGameFragment(createGameBundle(game));
 
 
         }
@@ -388,6 +418,8 @@ public class MainActivity extends AppCompatActivity implements MasterGameListFra
     }
     private void animateActivityEntry(){
         final View activity_main_layout;
+        if(findViewById(R.id.connectionStatusContainer).getVisibility()!=View.VISIBLE&&
+                findViewById(R.id.progressAnimationView).getVisibility()!=View.VISIBLE)
 
         if (findViewById(R.id.main_activity_container) != null) {
             activity_main_layout = findViewById(R.id.main_activity_container);

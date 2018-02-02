@@ -86,7 +86,6 @@ public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.MyViewHolder
     private void loadImage(String imageURL, Context context, RoundedImageView imageView) {
         Picasso.with(context)
                 .load(imageURL)
-            
                 .into(imageView);
 
     }
